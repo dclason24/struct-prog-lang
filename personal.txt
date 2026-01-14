@@ -1,3 +1,5 @@
+1/14/26
+
 expression -> tokenizer -> parser -> executor -> output
 
                              +
@@ -13,3 +15,4 @@ and turns it into a json.
 executor: produces the output
 
 regular expression: way of telling if your string matches a kind of pattern
+___________________________________________________________________________________________________
