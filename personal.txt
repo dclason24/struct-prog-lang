@@ -1,0 +1,15 @@
+expression -> tokenizer -> parser -> executor -> output
+
+                             +
+                             /\
+1+2*34     -> |1|2|*|24| -> 1  *   -> output
+                              /\
+                            2  34
+
+tokenizer: creates a token stream and recognizes all the tokens that were written. 
+separates each token
+parser: creates an abstract syntax tree from the token stream representing the codes structure 
+and turns it into a json. 
+executor: produces the output
+
+regular expression: way of telling if your string matches a kind of pattern
