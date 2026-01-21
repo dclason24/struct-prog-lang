@@ -16,3 +16,33 @@ executor: produces the output
 
 regular expression: way of telling if your string matches a kind of pattern
 ___________________________________________________________________________________________________
+1/21/26
+
+import re
+
+patterns = [
+  //r means regular expression - just signifies we are making a r expression
+  (r"\s+", "whitespace"),
+  (r "\d+", "number"),
+  (r "\+", "+"),
+  (r"\-", "-"),
+  (r "\/", "/"),
+  (r "\*", "*"),
+  (r ".", "error")
+]
+
+patterns = [(re.compile(p), tag) for p, tag in patterns]
+
+def tokenize(characters):
+  "tokenize a string using the patterns above"
+  tokens = []
+  position = 0
+  line = 1
+  column = 1
+
+  while position < len(characters):
+    for pattern, tag in patterns:
+      match = pattern.match(characters, position)
+      if match:
+        break
+    assert match it not None
