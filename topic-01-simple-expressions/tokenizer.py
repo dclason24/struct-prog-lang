@@ -8,6 +8,11 @@ from pprint import pprint
 # else:
 #     print("not match")
 
+# if something looks like this, label it as this
+# "." matches any character, so if nothing else matched, its invalid 
+#and it throws an error
+
+ #r means regular expression - just signifies we are making a r expression
 patterns = [
     (r"\s+", "whitespace"),
     (r"\d+", "number"),
@@ -25,28 +30,40 @@ patterns = [(re.compile(p), tag) for p, tag in patterns]
 
 def tokenize(characters):
     "Tokenize a string using the patterns above"
+    #tokens collected
     tokens = []
+    #cuurent position
     position = 0
+    #these 2 are used for error reporting
     line = 1
     column = 1
     current_tag = None
 
+#until the end of the input
     while position < len(characters):
+        #loop through all the patterns
         for pattern, tag in patterns:
             match = pattern.match(characters, position)
+            #if they match, stop checking and break
             if match:
                 current_tag = tag
                 break
         assert match is not None
+        //what are the characters that match this pattern?
         value = match.group(0)
 
+        # there was an invalid character in there
+        #look at the tag that was left behind
         if current_tag == "error":
             raise Exception(f"Unexpected character: {value!r}")
 
+        #skipping whitespace
         if tag != "whitespace":
             token = {"tag": current_tag, "line": line, "column": column}
+            #if the tag is a number it converts it to an integer
             if current_tag == "number":
                 token["value"] = int(value)
+            #adds it to the other tokens
             tokens.append(token)
 
         # advance position and update line/column
@@ -58,6 +75,7 @@ def tokenize(characters):
                 column += 1
         position = match.end()
 
+    #this is a special end of file token to know when to stop
     tokens.append({"tag": None, "line": line, "column": column})
     return tokens
 
