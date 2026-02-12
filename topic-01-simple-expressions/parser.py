@@ -29,9 +29,10 @@ def test_parse_factor():
 
 
 def parse_term(tokens):
-    """term = factor { ("*" | "/") factor }"""
+    #modified these two lines to add the % operator
+    """term = factor { ("*" | "/" | "%") factor }"""
     left, tokens = parse_factor(tokens)
-    while tokens[0]["tag"] in ["*", "/"]:
+    while tokens[0]["tag"] in ["*", "/" , "%"]:
         op = tokens[0]["tag"]
         right, tokens = parse_factor(tokens[1:])
         left = {"tag": op, "left": left, "right": right}
@@ -39,7 +40,7 @@ def parse_term(tokens):
 
 
 def test_parse_term():
-    """term = factor { ("*" | "/") factor }"""
+    """term = factor { ("*" | "/" | "%") factor }"""
     print("test parse_term()")
     tokens = tokenize("3")
     ast, tokens = parse_term(tokens)
@@ -73,6 +74,15 @@ def test_parse_term():
         "tag": "*",
     }
     assert tokens == [{"column": 6, "line": 1, "tag": None}]
+    #added this test below
+    tokens = tokenize("3%4")
+    ast, tokens = parse_term(tokens)
+    assert ast == {
+        "left": {"tag": "number", "value": 3},
+        "right": {"tag": "number", "value": 4},
+        "tag": "%",
+    }
+    assert tokens == [{"column": 4, "line": 1, "tag": None}]
 
 
 def parse_expression(tokens):
