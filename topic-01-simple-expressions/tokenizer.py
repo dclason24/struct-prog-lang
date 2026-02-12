@@ -96,6 +96,7 @@ def test_digits():
 
 def test_operators():
     print("test tokenize operators")
+    #added % to this test
     t = tokenize("+ - * / ( ) %")
     tags = [tok["tag"] for tok in t]
     assert tags == ["+", "-", "*", "/", "(", ")", "%", None]
