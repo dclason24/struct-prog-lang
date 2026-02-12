@@ -51,7 +51,7 @@ def tokenize(characters):
                 current_tag = tag
                 break
         assert match is not None
-        //what are the characters that match this pattern?
+        #what are the characters that match this pattern?
         value = match.group(0)
 
         # there was an invalid character in there
