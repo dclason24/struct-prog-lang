@@ -11,6 +11,7 @@ def evaluate(ast):
         return evaluate(ast["left"]) * evaluate(ast["right"])
     elif ast["tag"] == "/":
         return evaluate(ast["left"]) / evaluate(ast["right"])
+    #added this line
     elif ast["tag"] == "%":
         return evaluate(ast["left"]) % evaluate(ast["right"])
     else:
@@ -36,6 +37,7 @@ def test_evaluate():
         "right": {"tag": "number", "value": 5},
     }
     assert evaluate(ast) == 35
+      #-----added these tests-----------
     ast = {
         "tag": "%",
         "left": {"tag": "number", "value": 10},
