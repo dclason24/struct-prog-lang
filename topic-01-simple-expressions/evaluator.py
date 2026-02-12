@@ -11,6 +11,8 @@ def evaluate(ast):
         return evaluate(ast["left"]) * evaluate(ast["right"])
     elif ast["tag"] == "/":
         return evaluate(ast["left"]) / evaluate(ast["right"])
+    elif ast["tag"] == "%":
+        return evaluate(ast["left"]) % evaluate(ast["right"])
     else:
         raise ValueError(f"Unknown AST node: {ast}")
 
@@ -34,6 +36,31 @@ def test_evaluate():
         "right": {"tag": "number", "value": 5},
     }
     assert evaluate(ast) == 35
+    ast = {
+        "tag": "%",
+        "left": {"tag": "number", "value": 10},
+        "right": {"tag": "number", "value": 3},
+    }
+    assert evaluate(ast) == 1
+    ast = {
+        "tag": "%",
+        "left": {
+            "tag": "*",
+            "left": {"tag": "number", "value": 4},
+            "right": {"tag": "number", "value": 5},
+        },
+        "right": {"tag": "number", "value": 6},
+    }
+    ast = {
+        "tag": "%",
+        "left": {
+            "tag": "-",
+            "left": {"tag": "number", "value": 0},
+            "right": {"tag": "number", "value": 10},
+        },
+        "right": {"tag": "number", "value": 3},
+    }
+    assert evaluate(ast) == 2
 
 if __name__ == "__main__":
     test_evaluate()
