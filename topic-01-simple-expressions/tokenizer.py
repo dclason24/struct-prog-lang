@@ -22,6 +22,8 @@ patterns = [
     (r"\*", "*"),
     (r"\(", "("),
     (r"\)", ")"),
+  #added this line beneath
+    (r"%", "%"),
     (r".", "error"),
 ]
 
