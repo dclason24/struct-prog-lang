@@ -173,7 +173,7 @@ def ast_to_string(ast):
     assert False, f"Unknown tag [{ast['tag']}] in AST"
 
 
-__builtin_functions = ["head", "tail", "length", "keys", "input"]
+__builtin_functions = ["head", "tail", "length", "keys", "input", "addInt", "subInt", "mulInt", "divInt"]
 
 
 def evaluate_builtin_function(function_name, args):
@@ -204,6 +204,22 @@ def evaluate_builtin_function(function_name, args):
     if function_name == "input":
         assert len(args) == 0, "input() requires no arguments"
         return input(), None  # Uses Python's built-in input()
+
+    if function_name == "addInt":
+        assert len(args) == 2 and isinstance(args[0], int) and isinstance(args[1], int), "addInt() requires exactly 2 integer arguments"
+        return args[0] + args[1], None
+
+    if function_name == "subInt":
+        assert len(args) == 2 and isinstance(args[0], int) and isinstance(args[1], int), "subInt() requires exactly 2 integer arguments"
+        return args[0] - args[1], None
+
+    if function_name == "mulInt":
+        assert len(args) == 2 and isinstance(args[0], int) and isinstance(args[1], int), "mulInt() requires exactly 2 integer arguments"
+        return args[0] * args[1], None
+
+    if function_name == "divInt":
+        assert len(args) == 2 and isinstance(args[0], int) and isinstance(args[1], int), "divInt() requires exactly 2 integer arguments"
+        return args[0] // args[1], None
 
     assert False, f"Unknown builtin function '{function_name}'"
 
@@ -644,7 +660,7 @@ def evaluate(ast, environment):
         if value_status == "exit":
             return value, "exit"
 
-        ``
+        target_base[target_index] = value
         return value, None
 
     if ast["tag"] == "return":
